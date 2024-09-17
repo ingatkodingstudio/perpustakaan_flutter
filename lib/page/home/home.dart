@@ -3,6 +3,7 @@ import 'package:perpustakaan_app/page/home/categories_widget.dart';
 import 'package:perpustakaan_app/page/home/search_widget.dart';
 import 'package:perpustakaan_app/page/home/tab_widget.dart';
 import 'package:perpustakaan_app/page/home/top_authors_widget.dart';
+import 'package:perpustakaan_app/main.dart' as main;
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -10,7 +11,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBar(),
+      appBar: _appBar(context),
       body: const SingleChildScrollView(
         child: Column(
           children: [
@@ -37,7 +38,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  AppBar _appBar() {
+  AppBar _appBar(BuildContext context) {
     return AppBar(
       leading: IconButton(
         onPressed: () {},
@@ -45,7 +46,9 @@ class Home extends StatelessWidget {
       ),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(main.Route.notification);
+          },
           icon: const Icon(Icons.notifications),
         ),
         IconButton(
