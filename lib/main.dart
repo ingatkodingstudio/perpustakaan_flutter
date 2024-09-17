@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:perpustakaan_app/home.dart';
+import 'package:perpustakaan_app/page/home/home.dart';
 
 void main() {
   runApp(const MyApp());
