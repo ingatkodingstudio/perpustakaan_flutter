@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:perpustakaan_app/page/home/home.dart';
+import 'package:perpustakaan_app/page/search/search.dart';
+import 'package:perpustakaan_app/page/notification/notification.dart'
+    as notification_page;
 
 void main() {
   runApp(const MyApp());
+}
+
+class Route {
+  static const String home = '/';
+  static const String notification = '/notification';
+  static const String search = '/search';
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +26,23 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
         useMaterial3: true,
       ),
-      home: const Home(),
+      initialRoute: Route.home,
+      routes: {
+        Route.home: (context) => const Home(),
+        Route.notification: (context) => const notification_page.Notification()
+      },
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case Route.search:
+            final args = settings.arguments as String;
+
+            return MaterialPageRoute(
+              builder: (context) => Search(args),
+            );
+          default:
+            return null;
+        }
+      },
     );
   }
 }
