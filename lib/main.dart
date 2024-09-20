@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:perpustakaan_app/page/home/home.dart';
 import 'package:perpustakaan_app/page/search/search.dart';
 import 'package:perpustakaan_app/page/notification/notification.dart'
     as notification_page;
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class Route {
