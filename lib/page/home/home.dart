@@ -5,6 +5,7 @@ import 'package:perpustakaan_app/page/home/search_widget.dart';
 import 'package:perpustakaan_app/page/home/tab_widget.dart';
 import 'package:perpustakaan_app/page/home/top_authors_widget.dart';
 import 'package:perpustakaan_app/main.dart' as main;
+import 'package:perpustakaan_app/provider/book_notifier.dart';
 import 'package:perpustakaan_app/provider/bottom_navigation_notifier.dart';
 
 class Home extends ConsumerWidget {
@@ -28,7 +29,7 @@ class Home extends ConsumerWidget {
         );
         break;
       default:
-        content = _content();
+        content = _content(ref);
     }
 
     return Scaffold(
@@ -38,27 +39,32 @@ class Home extends ConsumerWidget {
     );
   }
 
-  Widget _content() {
-    return const SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 12,
-          ),
-          SearchWidget(),
-          SizedBox(
-            height: 24,
-          ),
-          TabWidget(),
-          SizedBox(
-            height: 16,
-          ),
-          CategoriesWidget(),
-          SizedBox(
-            height: 16,
-          ),
-          TopAuthorsWidget(),
-        ],
+  Widget _content(WidgetRef ref) {
+    return RefreshIndicator(
+      onRefresh: () {
+        return fetchBooks(ref);
+      },
+      child: const SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 12,
+            ),
+            SearchWidget(),
+            SizedBox(
+              height: 24,
+            ),
+            TabWidget(),
+            SizedBox(
+              height: 16,
+            ),
+            CategoriesWidget(),
+            SizedBox(
+              height: 16,
+            ),
+            TopAuthorsWidget(),
+          ],
+        ),
       ),
     );
   }
@@ -122,5 +128,9 @@ class Home extends ConsumerWidget {
         )
       ],
     );
+  }
+
+  Future<void> fetchBooks(WidgetRef ref) {
+    return ref.read(bookNotifierProvider.notifier).fetchData();
   }
 }
