@@ -5,6 +5,7 @@ import 'package:perpustakaan_app/page/home/search_widget.dart';
 import 'package:perpustakaan_app/page/home/tab_widget.dart';
 import 'package:perpustakaan_app/page/home/top_authors_widget.dart';
 import 'package:perpustakaan_app/main.dart' as main;
+import 'package:perpustakaan_app/page/saved/saved.dart';
 import 'package:perpustakaan_app/provider/book_notifier.dart';
 import 'package:perpustakaan_app/provider/bottom_navigation_notifier.dart';
 
@@ -24,9 +25,7 @@ class Home extends ConsumerWidget {
         );
         break;
       case 3:
-        content = const Center(
-          child: Text('Saved'),
-        );
+        content = const Saved();
         break;
       default:
         content = _content(ref);

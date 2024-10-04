@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:perpustakaan_app/model/book.dart';
 import 'package:perpustakaan_app/model/data_state.dart';
+import 'package:perpustakaan_app/page/detail/detail.dart';
 import 'package:perpustakaan_app/provider/book_notifier.dart';
 
 class TabWidget extends ConsumerStatefulWidget {
@@ -128,48 +129,97 @@ class _TabWidgetState extends ConsumerState<TabWidget> {
           padding: EdgeInsets.only(
               left: index == 0 ? 16 : 0,
               right: index == books.length - 1 ? 16 : 0),
-          child: SizedBox(
-            width: 150,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  color: Colors.blueGrey,
-                  width: 150,
-                  height: 190,
-                ),
-                Text(
-                  book.title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+          child: InkWell(
+            onTap: () {
+              if (book.id != 0) {
+                bottomSheetBook(context, book);
+              }
+            },
+            child: SizedBox(
+              width: 150,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    color: Colors.blueGrey,
+                    width: 150,
+                    height: 190,
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text(
-                      book.author,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
+                  Text(
+                    book.title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                    const Text(
-                      'Category',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text(
+                        book.author,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              ],
+                      const Text(
+                        'Category',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         );
       },
     );
+  }
+
+  void bottomSheetBook(BuildContext context, Book book) {
+    showBottomSheet(
+        context: context,
+        builder: (context) {
+          return SizedBox(
+            width: double.infinity,
+            height: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.white,
+                          size: 24.0,
+                        ),
+                      )),
+                  Expanded(
+                    child: Detail(book: book),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
